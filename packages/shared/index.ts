@@ -1,1 +1,2 @@
-console.log("Hello via Bun!");
+export { prisma } from "./db/client.ts";
+export { isDatabaseUnavailable, isUniqueViolation } from "./db/errors";
