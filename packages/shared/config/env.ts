@@ -5,7 +5,7 @@ import { z } from "zod";
 
 let envFileLoaded = false;
 
-function loadEnvFile(): void {
+export function loadEnvFile(): void {
     if (envFileLoaded) return;
     envFileLoaded = true;
 

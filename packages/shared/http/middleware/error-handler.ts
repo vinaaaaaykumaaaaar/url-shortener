@@ -1,6 +1,6 @@
 import type { ErrorRequestHandler, Request } from "express";
-import { isDatabaseUnavailable, isUniqueViolation } from "../../db";
-import type { AppLogger } from "../../logger";
+import { isDatabaseUnavailable, isUniqueViolation } from "../../db/errors";
+import type { AppLogger } from "../../logger/logger";
 import { errorEnvelope, type ErrorBody } from "../envelope";
 import {
   AppError,
@@ -136,12 +136,13 @@ export function errorHandler(options: ErrorHandlerOptions): ErrorRequestHandler 
     const appError = toAppError(error);
     const log = req.log ?? options.logger;
 
+    const originalError = appError.cause instanceof Error ? appError.cause : appError;
     const logFields = {
       status: appError.status,
       code: appError.code,
       method: req.method,
       route: req.route?.path ?? req.path,
-      err: appError,
+      err: originalError,
     };
 
     // 2) Keep the real error in server logs. Expected 4xx failures are quieter than server faults.

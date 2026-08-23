@@ -12,7 +12,7 @@ export function createHealthRouter(options: HealthRouterOptions): Router {
     const router = Router();
     const startedAt = Date.now();
 
-    router.get("/live", (_req, res) => {
+    router.get("/", (_req, res) => {
         res.setHeader("Cache-Control", "no-store");
         sendData(res, 200, {
             status: "ok",

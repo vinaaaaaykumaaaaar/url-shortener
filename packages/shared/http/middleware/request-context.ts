@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 import type { RequestHandler } from "express";
-import type { AppLogger } from "../../logger";
+import type { AppLogger } from "../../logger/logger";
 
 /**
  * An inbound id is reflected back into a response header and into logs, so it is only trusted
