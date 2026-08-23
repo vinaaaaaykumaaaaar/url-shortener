@@ -1,29 +1,16 @@
 import { Router } from "express";
 import {
     methodNotAllowed,
-    NotFoundError,
-    shortCodeSchema,
+    requireContentType,
     validateRequest,
 } from "@url-shortener/shared";
-import { z } from "zod";
-import { redirectUrlController } from "./urls.controller";
 
-const shortCodeParamsSchema = z.object({
-    shortCode: shortCodeSchema,
-});
 
 export function createUrlRouter(): Router {
     const router = Router();
 
-    router.get(
-        "/:shortCode",
-        validateRequest(
-            { params: shortCodeParamsSchema },
-            { onInvalid: () => new NotFoundError("Short link not found.") },
-        ),
-        redirectUrlController,
-    );
+    router.get("/:id", requireContentType(),);
 
-    router.all("/:shortCode", methodNotAllowed(["GET"]));
+    router.all("/", methodNotAllowed(["GET"]));
     return router;
 }
